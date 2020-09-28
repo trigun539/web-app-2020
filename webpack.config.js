@@ -1,3 +1,4 @@
+const { join } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const htmlConfig = new HtmlWebpackPlugin({
@@ -9,6 +10,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      },
+      {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
@@ -17,6 +23,12 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    alias: {
+      components: join(__dirname, 'src/components'),
+      containers: join(__dirname, 'src/containers')
+    }
   },
   plugins: [htmlConfig],
   devtool: 'inline-source-map'
